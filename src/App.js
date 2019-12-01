@@ -13,7 +13,7 @@ class App extends Component {
 
     this.state = { searchText: '', sort: '', cartItems: [], products: [], filteredProducts: [] };
   }
-  componentWillMount() {
+  componentDidMount() {
 
     if (localStorage.getItem('cartItems')) {
       this.setState({ cartItems: JSON.parse(localStorage.getItem('cartItems')) });

@@ -15,7 +15,7 @@ export default class Basket extends Component {
                         <ul style={{ marginLeft: -25 }}>
                             {cartItems.map(item => (
                                 <li key={item.id}>
-                                    <b>{item.title}</b>
+                                    <b>{item.name}</b>
                                     <button style={{ float: 'right' }} className="btn btn-danger btn-xs"
                                         onClick={(e) => this.props.handleRemoveFromCart(e, item)}>X</button>
                                     <br />
