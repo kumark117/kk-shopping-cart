@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 export default class Products extends Component {
 
-constructor(props) {
-	super(props);
-}
-
     render() {
 
 
         return (
             <div className="row">
-                <div className="col-md-4">
+                <div className="col-sm-4">
                     {`${this.props.count} products found.`}
                 </div>
-                <div className="col-md-4">
+               <div className="col-sm-4">
                     <label>Order by
                <select className="form-control" value={this.props.sort} onChange={this.props.handleSortChange}>
                             <option value="">Select</option>
@@ -24,10 +20,10 @@ constructor(props) {
                     </label>
                 </div>
 
-                <div className="col-md-4">
+                <div className="col-sm-4">
                     <label > Search
+               <input className="form-control" value={this.props.searchText} placeholder="search.." onChange={this.props.handleSearchTextChange}/>
                     </label>
-               <input value={this.props.searchText} placeholder="search.." onChange={this.props.handleSearchTextChange}/>
                 </div>
             </div>
         )
