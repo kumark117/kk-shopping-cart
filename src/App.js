@@ -8,7 +8,10 @@ import './App.css';
 class App extends Component {
   constructor() {
     super();
-    this.state = { size: '', sort: '', cartItems: [], products: [], filteredProducts: [] };
+   this.handleSortChange = this.handleSortChange.bind(this);
+   this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
+
+    this.state = { searchText: '', sort: '', cartItems: [], products: [], filteredProducts: [] };
   }
   componentWillMount() {
 
@@ -16,7 +19,7 @@ class App extends Component {
       this.setState({ cartItems: JSON.parse(localStorage.getItem('cartItems')) });
     }
 
-    fetch('http://localhost:8000/products').then(res => res.json())
+    fetch('https://api.myjson.com/bins/qzuzi').then(res => res.json())
       .catch(err => fetch('db.json').then(res => res.json()).then(data => data.products))
       .then(data => {
         this.setState({ products: data });
@@ -58,12 +61,15 @@ class App extends Component {
         state.products.sort((a, b) =>
           (state.sort === 'lowestprice'
             ? ((a.price > b.price) ? 1 : -1)
-            : ((a.price < b.price) ? 1 : -1)));
+            : (state.sort === 'highestprice'
+		 ? ((a.price < b.price) ? 1 : -1)
+		 : ((a.discount < b.discount) ? 1 : -1))
+		));
       } else {
         state.products.sort((a, b) => (a.id > b.id) ? 1 : -1);
       }
-      if (state.size !== '') {
-        return { filteredProducts: state.products.filter(a => a.availableSizes.indexOf(state.size.toUpperCase()) >= 0) };
+      if (state.searchText !== '') {
+        return { filteredProducts: state.products.filter(a => a.name.indexOf(state.searchText) >= 0) };
       }
       return { filteredProducts: state.products };
     })
@@ -72,8 +78,9 @@ class App extends Component {
     this.setState({ sort: e.target.value });
     this.listProducts();
   }
-  handleSizeChange = (e) => {
-    this.setState({ size: e.target.value });
+
+  handleSearchTextChange = (e) => {
+    this.setState({ searchText: e.target.value });
     this.listProducts();
   }
 
@@ -84,8 +91,7 @@ class App extends Component {
         <hr />
         <div className="row">
           <div className="col-md-9">
-            <Filter count={this.state.filteredProducts.length} handleSortChange={this.handleSortChange}
-              handleSizeChange={this.handleSizeChange} />
+            <Filter count={this.state.filteredProducts.length} handleSortChange={this.handleSortChange} handleSearchTextChange={this.handleSearchTextChange} searchText={this.state.searchText}/>
             <hr />
             <Products products={this.state.filteredProducts} handleAddToCart={this.handleAddToCart} />
           </div>

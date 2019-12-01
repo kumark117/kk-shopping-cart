@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 export default class Products extends Component {
 
+constructor(props) {
+	super(props);
+}
+
     render() {
 
 
@@ -15,21 +19,15 @@ export default class Products extends Component {
                             <option value="">Select</option>
                             <option value="lowestprice">Lowest to highest</option>
                             <option value="highestprice">Highest to lowest</option>
+                            <option value="discount">Discount</option>
                         </select>
                     </label>
                 </div>
+
                 <div className="col-md-4">
-                    <label > Filter Size
-               <select className="form-control" value={this.props.size} onChange={this.props.handleSizeChange}>
-                            <option value="">ALL</option>
-                            <option value="x">XS</option>
-                            <option value="s">S</option>
-                            <option value="m">M</option>
-                            <option value="l">L</option>
-                            <option value="xl">XL</option>
-                            <option value="xxl">XXL</option>
-                        </select>
+                    <label > Search
                     </label>
+               <input value={this.props.searchText} placeholder="search.." onChange={this.props.handleSearchTextChange}/>
                 </div>
             </div>
         )
