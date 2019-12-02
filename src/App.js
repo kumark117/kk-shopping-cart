@@ -69,7 +69,7 @@ class App extends Component {
         state.products.sort((a, b) => (a.id > b.id) ? 1 : -1);
       }
       if (state.searchText !== '') {
-        return { filteredProducts: state.products.filter(a => a.name.indexOf(state.searchText) >= 0) };
+        return { filteredProducts: state.products.filter(a => a.name.toLowerCase().indexOf(state.searchText.toLowerCase()) >= 0) };
       }
       return { filteredProducts: state.products };
     })
